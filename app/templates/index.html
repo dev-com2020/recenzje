@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<script src="https://unpkg.com/htmx.org@1.5.0"></script>
+    <style>
+        body{
+        padding: 20px;
+        }
+        table {
+        font-family: arial;
+        border-collapse: collapse;
+        width: 100%;
+        }
+        td,th {
+        border: 1px #383737;
+        padding: 8px;
+        }
+    </style>
+</head>
+<body>
+<h2>Recomendations</h2>
+<form hx-post="/submit" hx-swap="beforend" hx-target="#new-book" class="mb-3">
+    <input type="text" placeholder="Title..." name="title" class="form-control mb-3"/>
+    <input type="text" placeholder="Author..." name="author" class="form-control mb-3"/>
+    <button type="submit" class="btn btn primary">Dodaj</button>
+</form>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Author</th>
+    </tr>
+    </thead>
+    <tbody id="new-book" hx-target="closets tr" hx-swap="outerHTML swap:0.5s">
+    {% for i in books %}
+    <tr>
+        <td>{{ i.title }}</td>
+        <td>{{ i.author }}</td>
+        <td><button class="btn btn-primary" hx-get="/get-edit/form/{{ i.id }}">
+            EDYTUJ TYTUŁ
+        </button> </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>
